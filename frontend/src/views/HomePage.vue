@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="text" name="yeet" id="1">
+        finally
     </div>
 </template>
 <script>
