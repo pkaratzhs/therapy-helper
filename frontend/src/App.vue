@@ -1,12 +1,19 @@
 <template>
-    <div id="app" class="container">
-        <!-- to do nav -->
-        <router-view></router-view>
+    <div id="app">
+        <TopNavigation/>
+        <div class="container mx-auto">
+            <router-view></router-view>
+        </div>
+        
     </div>
 </template>
 
 <script>
+import TopNavigation from '@/components/TopNavigation'
 export default {
+    components:{
+        TopNavigation
+    },
     data() {
         return {
             
@@ -16,12 +23,5 @@ export default {
 </script>
 
 <style>
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-}
+
 </style>
