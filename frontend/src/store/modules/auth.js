@@ -10,21 +10,20 @@ const state = {
 const actions = {
     async loadUser({ commit }) {
         try {
-            const user = (await axios.get('/api/user')).data;
+            const user = (await axios.get('/api/user'));
             commit('setUser', user.data);
             commit('setLoggedIn', true);
         } catch (error) {
             commit('setUser', null);
             commit('setLoggedIn', false);
-            console.log(error)
         }
     },
     async logOut({ commit }) {
         try {
             await axios.post('/logout');
-            commit('setUser', {})
+            commit('setUser', null)
             commit('setLoggedIn', false)
-            router.go({ name: 'Home' })
+            router.push({ name: 'Login' })
         } catch (e) {
             console.log(e)
         }
@@ -56,7 +55,7 @@ const mutations = {
 
 /* GETTERS */
 const getters = {
-    getLoggedIn: state => state.isLoggedIn && state.user,
+    getLoggedIn: state => state.isLoggedIn,
     getUser: state => state.user
 };
 export default {

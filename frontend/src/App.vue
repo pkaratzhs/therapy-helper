@@ -1,27 +1,23 @@
 <template>
     <div id="app">
-        <TopNavigation/>
+        <TopNavigation />
         <div class="container mx-auto">
             <router-view></router-view>
         </div>
-        
     </div>
 </template>
 
 <script>
-import TopNavigation from '@/components/TopNavigation'
+import TopNavigation from '@/components/TopNavigation';
 export default {
-    components:{
-        TopNavigation
+    components: {
+        TopNavigation,
     },
     data() {
-        return {
-            
-        }
+        return {};
     },
 };
 </script>
 
 <style>
-
 </style>

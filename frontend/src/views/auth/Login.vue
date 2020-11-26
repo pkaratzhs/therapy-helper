@@ -85,24 +85,19 @@
 
 <script>
 export default {
-  data() {
-    return {
-      credentials:{
-        email: '',
-        password: '',
-      }
-    }
-  },
-  methods: {
-    async login(){
-      await this.$store.dispatch('auth/login',this.credentials)
-      this.$router.push({name:'Home'})
-    }
-  },
-  computed:{
-    isLoggedIn(){
-      return this.$store.state.auth.isLoggedIn;
-    }
-  }
-}
+    data() {
+        return {
+            credentials: {
+                email: '',
+                password: '',
+            },
+        };
+    },
+    methods: {
+        async login() {
+            await this.$store.dispatch('auth/login', this.credentials);
+            this.$router.push({ name: 'HomePage' });
+        },
+    },
+};
 </script>

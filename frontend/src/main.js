@@ -8,8 +8,12 @@ axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:8000'
 Vue.config.productionTip = false
 
-new Vue({
-    router,
-    store,
-    render: h => h(App),
-}).$mount('#app')
+//feels like bad practice, would have to refactor
+store.dispatch("auth/loadUser").then(() => {
+    new Vue({
+        store,
+        router,
+        render: h => h(App),
+    }).$mount('#app')
+})
+

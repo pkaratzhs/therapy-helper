@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('user', function () {
+        return auth()->user();
+    });
     /* // Password Reset...
     if (Features::enabled(Features::resetPasswords())) {
         if ($enableViews) {
@@ -25,17 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
             ->name('password.update');
     }
 
-    // Registration...
-    if (Features::enabled(Features::registration())) {
-        if ($enableViews) {
-            Route::get('/register', [RegisteredUserController::class, 'create'])
-                ->middleware(['guest'])
-                ->name('register');
-        }
 
-        Route::post('/register', [RegisteredUserController::class, 'store'])
-            ->middleware(['guest']);
-    }
+
 
     // Email Verification...
     if (Features::enabled(Features::emailVerification())) {
