@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TherapyCaseController;
+
+Route::apiResource('cases', TherapyCaseController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', function () {
