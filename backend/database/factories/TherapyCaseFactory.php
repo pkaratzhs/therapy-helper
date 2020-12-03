@@ -22,8 +22,9 @@ class TherapyCaseFactory extends Factory
     public function definition()
     {
         return [
+            'name' => $this->faker->name(),
+            'age' => $this->faker->date('1980-1-1', 'now'),
             'diagnosis' => $this->faker->sentence(),
-            'finished' => false,
         ];
     }
 }

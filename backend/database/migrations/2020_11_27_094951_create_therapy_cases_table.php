@@ -15,9 +15,10 @@ class CreateTherapyCasesTable extends Migration
     {
         Schema::create('therapy_cases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('child_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->date('age');
             $table->text('diagnosis');
-            $table->boolean('finished')->default(false);
+            $table->timestamp('completed_at')->nullable();
             $table->timestamps();
         });
     }

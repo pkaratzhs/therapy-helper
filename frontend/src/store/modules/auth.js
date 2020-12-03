@@ -10,7 +10,7 @@ const state = {
 const actions = {
     async loadUser({ commit }) {
         try {
-            const user = (await axios.get('/api/user'));
+            const user = (await axios.get('/api/user')).data;
             commit('setUser', user.data);
             commit('setLoggedIn', true);
         } catch (error) {

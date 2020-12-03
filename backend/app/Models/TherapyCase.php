@@ -9,6 +9,7 @@ class TherapyCase extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'child_id',
         'finished',
         'diagnosis'
     ];

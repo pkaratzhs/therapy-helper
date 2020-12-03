@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TherapyCaseResource;
 use App\Models\TherapyCase;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class TherapyCaseController extends Controller
      */
     public function index()
     {
-        return TherapyCase::with('child')->get();
+        return TherapyCaseResource::collection(TherapyCase::with(['child','users'])->get());
     }
 
     /**
@@ -25,7 +26,13 @@ class TherapyCaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'child_id'=>'required',
+            'diagnosis' => 'required',
+        ]);
+        $case = TherapyCase::create($request->all());
+        $case->users()->attach($request->user());
+        return new TherapyCaseResource($case->child);
     }
 
     /**
@@ -36,7 +43,7 @@ class TherapyCaseController extends Controller
      */
     public function show(TherapyCase $case)
     {
-        return $case->load(['child','users','goals','goals.activities']);
+        return new TherapyCaseResource($case);
     }
 
     /**

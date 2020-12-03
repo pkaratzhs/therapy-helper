@@ -3,12 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TherapyCaseController;
-
-Route::apiResource('cases', TherapyCaseController::class);
+use App\Http\Resources\UserResource;
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('cases', TherapyCaseController::class);
     Route::get('user', function () {
-        return auth()->user();
+        return new UserResource(auth()->user());
     });
     /* // Password Reset...
     if (Features::enabled(Features::resetPasswords())) {
