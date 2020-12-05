@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class TherapyCaseController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(TherapyCase::class, 'case');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +19,7 @@ class TherapyCaseController extends Controller
      */
     public function index()
     {
-        return TherapyCaseResource::collection(TherapyCase::with(['child','users'])->get());
+        return TherapyCaseResource::collection(auth()->user()->therapyCases);
     }
 
     /**
@@ -27,12 +31,13 @@ class TherapyCaseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'child_id'=>'required',
+            'name' => 'required',
+            'age' => 'required',
             'diagnosis' => 'required',
         ]);
         $case = TherapyCase::create($request->all());
         $case->users()->attach($request->user());
-        return new TherapyCaseResource($case->child);
+        return new TherapyCaseResource($case->load('users'));
     }
 
     /**
@@ -55,17 +60,23 @@ class TherapyCaseController extends Controller
      */
     public function update(Request $request, TherapyCase $case)
     {
-        //
+        $case->fill($request->all());
+        $case->save();
+        
+
+        return new TherapyCaseResource($case);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TherapyCase  $therapyCase
+     * @param  \App\Models\TherapyCase  $case
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TherapyCase $therapyCase)
+    public function destroy(TherapyCase $case)
     {
-        //
+        $case->delete();
+
+        return response('deleted', 200);
     }
 }

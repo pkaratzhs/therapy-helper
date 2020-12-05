@@ -16,8 +16,13 @@ class Goal extends Model
     {
         return $this->belongsToMany(Activity::class);
     }
+
     public function therapyCase()
     {
         return $this->belongsTo(TherapyCase::class);
+    }
+    
+    public function path()
+    {
     }
 }

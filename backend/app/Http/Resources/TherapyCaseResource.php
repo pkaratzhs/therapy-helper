@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\ChildResource;
+use Carbon\Carbon;
 
 class TherapyCaseResource extends JsonResource
 {
@@ -18,6 +18,9 @@ class TherapyCaseResource extends JsonResource
         return [
             'id' => $this->id,
             'diagnosis' => $this->diagnosis,
+            'age' => Carbon::parse($this->age)->age,
+            'name' => $this->name,
+            'users' => UserResource::collection($this->whenLoaded('users'))
         ];
     }
 }

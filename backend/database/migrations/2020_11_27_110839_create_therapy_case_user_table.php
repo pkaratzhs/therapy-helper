@@ -14,7 +14,7 @@ class CreateTherapyCaseUserTable extends Migration
     public function up()
     {
         Schema::create('therapy_case_user', function (Blueprint $table) {
-            $table->foreignId('therapy_case_id')->constrained();
+            $table->foreignId('therapy_case_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained();
         });
     }

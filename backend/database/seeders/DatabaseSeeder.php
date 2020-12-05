@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
                 $case->users()->attach(User::factory()->create());
             });
         $goals = Goal::all();
-        //merge later
+        
         foreach ($goals as $goal) {
             $goal->activities()->attach(Activity::factory()->times(10)->create());
         }

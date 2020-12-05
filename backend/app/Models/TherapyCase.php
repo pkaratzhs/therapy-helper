@@ -9,10 +9,16 @@ class TherapyCase extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'child_id',
-        'finished',
-        'diagnosis'
+        'name',
+        'age',
+        'diagnosis',
+        'completed_at'
     ];
+
+    public function path()
+    {
+        return 'api/cases/'.$this->id;
+    }
 
     public function users()
     {

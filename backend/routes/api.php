@@ -7,6 +7,7 @@ use App\Http\Resources\UserResource;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('cases', TherapyCaseController::class);
+    Route::apiResource('cases.goals', GoalController::class);
     Route::get('user', function () {
         return new UserResource(auth()->user());
     });
