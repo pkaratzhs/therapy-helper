@@ -15,7 +15,9 @@ class CreateGoalsTable extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('therapy_case_id')->constrained();
+            $table->foreignId('therapy_case_id')
+                ->constrained()
+                ->onDelete('cascade');
             $table->text('title');
             $table->timestamps();
         });

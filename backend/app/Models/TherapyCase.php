@@ -24,12 +24,14 @@ class TherapyCase extends Model
     {
         return $this->belongsToMany(User::class);
     }
-    public function child()
-    {
-        return $this->belongsTo(Child::class);
-    }
+
     public function goals()
     {
         return $this->hasMany(Goal::class);
+    }
+
+    public function findGoal(Goal $goal)
+    {
+        return $this->goals->find($goal);
     }
 }

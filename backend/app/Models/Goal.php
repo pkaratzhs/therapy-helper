@@ -21,8 +21,9 @@ class Goal extends Model
     {
         return $this->belongsTo(TherapyCase::class);
     }
-    
+
     public function path()
     {
+        return 'api/cases/'.$this->therapyCase->id.'/goals/'.$this->id;
     }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TherapyCaseController;
+use App\Http\Controllers\GoalController;
 use App\Http\Resources\UserResource;
 
 Route::middleware('auth:sanctum')->group(function () {

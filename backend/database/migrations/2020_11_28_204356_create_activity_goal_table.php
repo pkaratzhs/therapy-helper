@@ -14,8 +14,8 @@ class CreateActivityGoalTable extends Migration
     public function up()
     {
         Schema::create('activity_goal', function (Blueprint $table) {
-            $table->foreignId('activity_id')->constrained();
-            $table->foreignId('goal_id')->constrained();
+            $table->foreignId('activity_id')->constrained()->onDelete('cascade');
+            $table->foreignId('goal_id')->constrained()->onDelete('cascade');
         });
     }
 

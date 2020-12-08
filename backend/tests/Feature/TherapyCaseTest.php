@@ -13,10 +13,8 @@ class TherapyCaseTest extends TestCase
     /* * @test */
     public function test_a_user_can_see_cases()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $case = TherapyCase::factory()->create();
-        $case->users()->attach($user);
+        $user = $this->createUserAndCase();
+        $case = $user->therapyCases->first();
         $this->get('api/cases')->assertSee($case->name);
     }
 
@@ -35,23 +33,21 @@ class TherapyCaseTest extends TestCase
     
     public function test_a_user_cant_see_other_cases()
     {
-        $user = User::factory()->create();
-        $case1 = TherapyCase::factory()->create();
+        $user = $this->createUserAndCase();
+        $case = $user->therapyCases->first();
         $case2 = TherapyCase::factory()->create();
-        $case2->users()->attach($user);
     
         $this->actingAs($user)
-            ->get('api/cases')
-            ->assertDontSee($case1->name)
-            ->assertSee($case2->name);
+             ->get('api/cases')
+             ->assertDontSee($case2->name)
+             ->assertSee($case->name);
     }
 
     public function test_a_user_can_update_his_case()
     {
         $this->withoutExceptionHandling();
-        $user = User::factory()->create();
-        $case = TherapyCase::factory()->create();
-        $case->users()->attach($user);
+        $user = $this->createUserAndCase();
+        $case = $user->therapyCases->first();
 
         $response = $this->actingAs($user)
             ->patch($case->path(), ['name' => 'little yeeter 2'])
@@ -61,10 +57,8 @@ class TherapyCaseTest extends TestCase
     public function test_a_user_can_delete_his_cases()
     {
         $this->withoutExceptionHandling();
-        $user = User::factory()->create();
-        $case = TherapyCase::factory()->create();
-        $case->users()->attach($user);
-
+        $user = $this->createUserAndCase();
+        $case = $user->therapyCases->first();
         $this->actingAs($user)
             ->delete($case->path())
             ->assertStatus(200)
