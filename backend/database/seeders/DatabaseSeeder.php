@@ -24,10 +24,17 @@ class DatabaseSeeder extends Seeder
             ->each(function (TherapyCase $case) {
                 $case->users()->attach(User::factory()->create());
             });
+       
+        $users = User::all();
+
+        foreach ($users as $user) {
+            $user->activities()->saveMany(Activity::factory()->times(2)->make());
+        }
+
         $goals = Goal::all();
-        
+        $activities = Activity::all();
         foreach ($goals as $goal) {
-            $goal->activities()->attach(Activity::factory()->times(10)->create());
+            $goal->activities()->attach($activities->random(3));
         }
     }
 }

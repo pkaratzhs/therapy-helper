@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\TherapyCaseGoalActivityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TherapyCaseController;
@@ -9,6 +11,9 @@ use App\Http\Resources\UserResource;
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('cases', TherapyCaseController::class);
     Route::apiResource('cases.goals', GoalController::class);
+    Route::apiResource('cases.goals.activities', TherapyCaseGoalActivityController::class)->only(['index','show','destroy']);
+    Route::patch('cases/{case}/goals/{goal}/activities/{activity}', [TherapyCaseGoalActivityController::class, 'attachActivityToGoal']);
+    Route::apiResource('activities', ActivityController::class);
     Route::get('user', function () {
         return new UserResource(auth()->user());
     });

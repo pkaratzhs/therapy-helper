@@ -93,13 +93,11 @@ class GoalsTest extends TestCase
 
         $this->actingAs($user)
             ->delete($goal->path())
-            ->assertStatus(200)
-            ->assertSee('deleted');
+            ->assertStatus(204);
     }
 
     public function test_user_cant_access_a_goal_from_another_case()
     {
-        $this->withoutExceptionHandling();
         $user = $this->createUserAndCase();
         $case1 = $user->therapyCases->first();
         $case2 = TherapyCase::factory()->has(Goal::factory()->times(10))->create();
@@ -107,6 +105,6 @@ class GoalsTest extends TestCase
 
         $resp = $this->actingAs($user)
             ->get($case1->path().'/goals/'.$case2->goals->first()->id)
-            ->assertStatus(404);
+            ->assertStatus(403);
     }
 }

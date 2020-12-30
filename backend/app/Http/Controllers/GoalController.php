@@ -9,10 +9,6 @@ use App\Models\TherapyCase;
 
 class GoalController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(Goal::class, 'goal');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,6 +16,7 @@ class GoalController extends Controller
      */
     public function index(TherapyCase $case)
     {
+        $this->authorize('viewAny', Goal::class);
         return GoalResource::collection($case->goals);
     }
 
@@ -31,6 +28,7 @@ class GoalController extends Controller
      */
     public function store(Request $request, TherapyCase $case)
     {
+        $this->authorize('create', Goal::class);
         $request->validate([
             'title' => 'required'
         ]);
@@ -47,10 +45,11 @@ class GoalController extends Controller
      */
     public function show(TherapyCase $case, Goal $goal)
     {
-        if ($case->findGoal($goal)) {
-            return new GoalResource($goal);
-        }
-        return response()->json('', 404);
+        /*  if ($case->findGoal($goal)) { */
+        $this->authorize('view', [$goal,$case]);
+        return new GoalResource($goal);
+        /* }
+        return response()->json('', 404); */
     }
 
     /**
@@ -62,11 +61,10 @@ class GoalController extends Controller
      */
     public function update(Request $request, TherapyCase $case, Goal $goal)
     {
-        if ($case->findGoal($goal)) {
-            $goal->fill($request->all())->save();
-            return new GoalResource($goal);
-        }
-        return response()->json('', 404);
+        $this->authorize('update', [$goal,$case]);
+      
+        $goal->fill($request->all())->save();
+        return new GoalResource($goal);
     }
 
     /**
@@ -77,10 +75,8 @@ class GoalController extends Controller
      */
     public function destroy(Therapycase $case, Goal $goal)
     {
-        if ($case->findGoal($goal)) {
-            $goal->delete();
-            return response()->json('deleted', 200);
-        }
-        return response()->json('', 404);
+        $this->authorize('delete', [$goal,$case]);
+        $goal->delete();
+        return response('', 204);
     }
 }

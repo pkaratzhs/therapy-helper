@@ -77,6 +77,6 @@ class TherapyCaseController extends Controller
     {
         $case->delete();
 
-        return response('deleted', 200);
+        return response('', 204);
     }
 }

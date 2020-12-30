@@ -61,7 +61,6 @@ class TherapyCaseTest extends TestCase
         $case = $user->therapyCases->first();
         $this->actingAs($user)
             ->delete($case->path())
-            ->assertStatus(200)
-            ->assertSee('deleted');
+            ->assertStatus(204);
     }
 }

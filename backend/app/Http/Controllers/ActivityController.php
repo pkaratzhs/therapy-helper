@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ActivityResource;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 
-class ActivitiesController extends Controller
+class ActivityController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Activity::class, 'activity');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,7 @@ class ActivitiesController extends Controller
      */
     public function index()
     {
-        //
+        return ActivityResource::collection(Activity::paginate());
     }
 
     /**
@@ -25,7 +30,14 @@ class ActivitiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required',
+            'description' => 'required'
+        ]);
+       
+        $activity = $request->user()->activities()->create($request->all());
+
+        return new ActivityResource($activity);
     }
 
     /**
@@ -36,7 +48,7 @@ class ActivitiesController extends Controller
      */
     public function show(Activity $activity)
     {
-        //
+        return new ActivityResource($activity);
     }
 
     /**
@@ -48,7 +60,10 @@ class ActivitiesController extends Controller
      */
     public function update(Request $request, Activity $activity)
     {
-        //
+        $activity->fill($request->all());
+        $activity->save();
+
+        return new ActivityResource($activity);
     }
 
     /**
@@ -59,6 +74,8 @@ class ActivitiesController extends Controller
      */
     public function destroy(Activity $activity)
     {
-        //
+        $activity->delete();
+        
+        return response('', 204);
     }
 }

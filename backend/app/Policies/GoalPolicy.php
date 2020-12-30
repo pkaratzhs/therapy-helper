@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Activity;
 use App\Models\Goal;
 use App\Models\TherapyCase;
 use App\Models\User;
@@ -29,9 +30,9 @@ class GoalPolicy
      * @param  \App\Models\Goal  $goal
      * @return mixed
      */
-    public function view(User $user, Goal $goal)
+    public function view(User $user, Goal $goal, TherapyCase $case)
     {
-        return $goal->therapyCase->users->contains('id', $user->id);
+        return $case->goals->contains($goal) && $case->users->contains('id', $user->id);
     }
 
     /**
@@ -52,9 +53,10 @@ class GoalPolicy
      * @param  \App\Models\Goal  $goal
      * @return mixed
      */
-    public function update(User $user, Goal $goal)
+    public function update(User $user, Goal $goal, TherapyCase $case)
     {
-        return $goal->therapyCase->users->contains('id', $user->id);
+        return $case->goals->contains($goal) && $case->users->contains('id', $user->id);
+        ;
     }
 
     /**
@@ -64,9 +66,10 @@ class GoalPolicy
      * @param  \App\Models\Goal  $goal
      * @return mixed
      */
-    public function delete(User $user, Goal $goal)
+    public function delete(User $user, Goal $goal, TherapyCase $case)
     {
-        return $goal->therapyCase->users->contains('id', $user->id);
+        return $case->goals->contains($goal) && $case->users->contains('id', $user->id);
+        ;
     }
 
     /**
